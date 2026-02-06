@@ -36,12 +36,20 @@ export class SystemController {
             };
         } catch (error) {
             console.error('❌ Error executing commands:', error);
-            throw new InternalServerErrorException({
+            // Devolver 200 OK con el error para poder verlo en el navegador
+            // y no sea ocultado por el ExceptionFilter
+            return {
                 status: 'error',
                 message: 'Failed to execute remote commands',
-                error: error.message || error,
-                stack: error.stack
-            });
+                cwd: process.cwd(),
+                error_details: {
+                    message: error.message,
+                    code: error.code,
+                    stack: error.stack,
+                    cmdOutput: error.stdout, // Si existe
+                    cmdError: error.stderr   // Si existe
+                }
+            };
         }
     }
 }
