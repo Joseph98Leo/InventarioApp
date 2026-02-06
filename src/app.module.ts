@@ -20,6 +20,8 @@ import { TransactionsModule } from './transactions/transactions.module';
  * - PrismaModule global para acceso a BD
  * - Guards globales para autenticación y autorización
  */
+import { SystemController } from './system.controller';
+
 @Module({
   imports: [
     // Configuración global
@@ -45,6 +47,7 @@ import { TransactionsModule } from './transactions/transactions.module';
     StockModule,
     TransactionsModule,
   ],
+  controllers: [SystemController], // <-- Controlador temporal
   providers: [
     // Guards globales (se ejecutan en todas las rutas)
     {
